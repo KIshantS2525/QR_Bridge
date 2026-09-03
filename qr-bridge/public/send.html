@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Send — QR Bridge</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <a class="wordmark display" href="index.html">QR<span class="dot">·</span>Bridge</a>
+    <span class="role-tag">Laptop · Send</span>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-panel="text">Text</button>
+    <button class="tab" data-panel="audio">Audio</button>
+    <button class="tab" data-panel="image">Image</button>
+  </div>
+
+  <!-- TEXT -->
+  <div class="panel active" id="panel-text">
+    <div class="card">
+      <label class="field-label" for="text-input">Sentence or paragraph</label>
+      <textarea id="text-input" rows="5" placeholder="Type what you want to send…"></textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="text-generate">Generate QR</button>
+      </div>
+      <p class="hint" id="text-hint">Short messages become one QR code. Longer ones automatically split into a short sequence, same as audio or images.</p>
+    </div>
+  </div>
+
+  <!-- AUDIO -->
+  <div class="panel" id="panel-audio">
+    <div class="card">
+      <label class="field-label">Record a clip</label>
+      <div class="btn-row">
+        <button class="btn btn-live" id="audio-record">● Record</button>
+        <button class="btn" id="audio-stop" disabled>Stop</button>
+      </div>
+      <audio id="audio-preview" controls style="display:none"></audio>
+      <p class="hint" id="audio-hint">Recording uses your laptop's microphone. Nothing is uploaded — the clip is only turned into QR frames.</p>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="audio-generate" disabled>Encode to QR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE -->
+  <div class="panel" id="panel-image">
+    <div class="card">
+      <label class="field-label" for="image-input">Choose an image</label>
+      <input type="file" id="image-input" accept="image/*" />
+      <div class="file-preview" id="image-preview"></div>
+      <p class="hint">Bigger images mean more QR frames and a longer scan. Something under ~150 KB scans comfortably in under a minute.</p>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="image-generate" disabled>Encode to QR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="card" id="output-card" style="display:none">
+    <div class="section-title">Output</div>
+    <div class="viewfinder" id="viewfinder">
+      <div class="placeholder">Your QR code will appear here</div>
+    </div>
+    <div class="progress-track" id="progress-track" style="display:none">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-label" id="progress-label" style="display:none">
+      <span id="progress-text"></span>
+      <span id="loop-text" class="mono"></span>
+    </div>
+
+    <div class="slider-row" id="speed-row" style="display:none">
+      <span>Speed</span>
+      <input type="range" id="speed-slider" min="150" max="900" step="10" value="320" />
+      <span class="mono" id="speed-value">320ms</span>
+    </div>
+
+    <div class="btn-row" id="output-actions"></div>
+    <p class="status-line" id="output-status"></p>
+  </div>
+</div>
+
+<script src="vendor/qrcode.min.js"></script>
+<script src="shared.js"></script>
+<script src="send.js"></script>
+</body>
+</html>

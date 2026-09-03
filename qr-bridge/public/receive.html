@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Receive — QR Bridge</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <a class="wordmark display" href="index.html">QR<span class="dot">·</span>Bridge</a>
+    <span class="role-tag">Phone · Receive</span>
+  </div>
+
+  <div class="card">
+    <div class="viewfinder empty" id="viewfinder">
+      <div class="placeholder" id="camera-placeholder">Tap "Start camera" to scan a QR code from the other screen</div>
+    </div>
+
+    <div class="progress-track" id="progress-track" style="display:none">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-label" id="progress-label" style="display:none">
+      <span id="progress-text"></span>
+      <span class="mono" id="progress-pct"></span>
+    </div>
+
+    <p class="status-line" id="status">Camera is off.</p>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" id="camera-toggle">Start camera</button>
+      <button class="btn" id="reset-btn">New scan</button>
+    </div>
+  </div>
+
+  <div class="card" id="result-card" style="display:none">
+    <div class="section-title">Result</div>
+    <div id="result-body"></div>
+    <div class="btn-row" id="result-actions"></div>
+  </div>
+</div>
+
+<script src="vendor/jsQR.js"></script>
+<script src="shared.js"></script>
+<script src="receive.js"></script>
+</body>
+</html>
