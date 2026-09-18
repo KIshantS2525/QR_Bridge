@@ -1,0 +1,69 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 2px); --radius-md: var(--radius); --radius-lg: calc(var(--radius) + 2px); --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background); --color-foreground: var(--foreground); --color-card: var(--card); --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover); --color-popover-foreground: var(--popover-foreground); --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary); --color-secondary-foreground: var(--secondary-foreground); --color-muted: var(--muted); --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent); --color-accent-foreground: var(--accent-foreground); --color-destructive: var(--destructive); --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border); --color-input: var(--input); --color-ring: var(--ring); --color-surface: var(--surface); --color-signal: var(--signal); --color-success: var(--success);
+  --font-sans: "Manrope", sans-serif; --font-mono: "IBM Plex Mono", monospace;
+  --shadow-lift: 0 18px 50px -28px color-mix(in oklab, var(--foreground) 32%, transparent);
+  --shadow-block: 4px 4px 0 color-mix(in oklab, var(--primary) 32%, transparent);
+}
+
+:root {
+  --radius: 0.25rem;
+  --background: oklch(0.965 0.012 245); --foreground: oklch(0.18 0.035 255); --card: oklch(0.99 0.005 240); --card-foreground: var(--foreground);
+  --popover: var(--card); --popover-foreground: var(--foreground); --primary: oklch(0.52 0.22 259); --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.92 0.02 240); --secondary-foreground: var(--foreground); --muted: oklch(0.91 0.014 245); --muted-foreground: oklch(0.48 0.035 252);
+  --accent: oklch(0.92 0.03 249); --accent-foreground: var(--foreground); --destructive: oklch(0.58 0.22 28); --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.77 0.026 245); --input: var(--border); --ring: var(--primary); --surface: oklch(0.99 0.006 230 / 82%); --signal: oklch(0.71 0.19 48); --success: oklch(0.56 0.14 160);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { background: var(--color-background); }
+  body { margin: 0; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans); letter-spacing: 0; }
+  button, [role="button"] { letter-spacing: 0; }
+}
+
+.blueprint-grid {
+  background-image: linear-gradient(color-mix(in oklab, var(--border) 42%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in oklab, var(--border) 42%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(to bottom, black 0%, black 74%, transparent 100%);
+}
+.work-panel { border: 1px solid var(--color-border); background: var(--color-surface); padding: clamp(1rem, 3vw, 1.75rem); box-shadow: var(--shadow-lift); backdrop-filter: blur(14px); }
+.contact-sheet { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 3px; margin-top: 1rem; border: 1px solid var(--color-border); background: color-mix(in oklab, var(--muted) 55%, transparent); padding: 0.6rem; }
+.chunk-cell { aspect-ratio: 1; min-width: 0; background: var(--color-background); border: 1px solid color-mix(in oklab, var(--border) 70%, transparent); }
+.chunk-cell-done { background: var(--color-primary); border-color: var(--color-primary); }
+.chunk-cell-active { background: var(--color-signal); border-color: var(--color-signal); animation: cell-pulse .6s ease-in-out infinite alternate; }
+.qr-stage { position: relative; display: grid; min-height: 410px; place-items: center; overflow: hidden; perspective: 900px; }
+.qr-card { position: relative; z-index: 3; width: min(84vw, 310px); border: 1px solid var(--color-border); background: var(--color-card); padding: 1rem; color: var(--color-foreground); box-shadow: 0 32px 50px -30px color-mix(in oklab, var(--primary) 55%, transparent); transform-style: preserve-3d; transition: transform 120ms ease-out; }
+.qr-card svg { display: block; width: 100%; height: auto; }
+.qr-plinth { position: absolute; z-index: 1; width: 330px; height: 120px; border: 1px solid var(--color-border); background: color-mix(in oklab, var(--primary) 7%, var(--surface)); transform: translateY(132px) rotateX(68deg); box-shadow: 0 34px 55px color-mix(in oklab, var(--foreground) 18%, transparent); }
+.qr-beam { position: absolute; z-index: 2; width: 290px; height: 290px; background: radial-gradient(circle, color-mix(in oklab, var(--primary) 22%, transparent), transparent 68%); animation: beam-pulse var(--pulse-speed, .3s) ease-in-out infinite alternate; }
+.qr-frame-in { animation: qr-in .15s ease-out; }
+.sketch-square path, .sketch-underline path, .sketch-path { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 420; stroke-dashoffset: 420; animation: draw-line 1.4s cubic-bezier(.5,0,.2,1) forwards; }
+.sketch-underline path { stroke-width: 3; animation-delay: .35s; }
+.sketch-path { stroke-width: 2; animation-delay: .7s; }
+.camera-well { position: relative; aspect-ratio: 4/3; overflow: hidden; border: 1px solid var(--foreground); background: var(--foreground); box-shadow: inset 0 0 0 8px color-mix(in oklab, var(--background) 8%, transparent), var(--shadow-lift); }
+.scan-reticle { position: absolute; inset: 13%; color: var(--color-signal); transition: color .15s; }
+.scan-reticle i { position: absolute; width: 34px; height: 34px; border-color: currentColor; }
+.scan-reticle-locked { color: var(--color-success); }
+.scan-line { position: absolute; left: 5%; right: 5%; top: 10%; height: 1px; background: currentColor; box-shadow: 0 0 16px currentColor; animation: scan 2.2s ease-in-out infinite alternate; }
+.loader-grid { width: 60px; aspect-ratio: 1; background: repeating-conic-gradient(var(--color-primary) 0 12.5%, transparent 0 25%); animation: rotate 1.3s steps(8) infinite; }
+
+@keyframes draw-line { to { stroke-dashoffset: 0; } }
+@keyframes beam-pulse { from { opacity: .35; transform: scale(.94); } to { opacity: .9; transform: scale(1.05); } }
+@keyframes qr-in { from { opacity: .25; transform: translateZ(-10px) scale(.98); } to { opacity: 1; transform: translateZ(0) scale(1); } }
+@keyframes scan { from { transform: translateY(0); } to { transform: translateY(230px); } }
+@keyframes cell-pulse { to { opacity: .45; } }
+@keyframes rotate { to { transform: rotate(360deg); } }
+
+@media (max-width: 520px) { .contact-sheet { grid-template-columns: repeat(12, minmax(0, 1fr)); } .qr-stage { min-height: 370px; } .qr-plinth { width: 290px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
